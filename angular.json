@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "projects": {
+    "angular-core-workshop": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/angular-core-workshop",
+      "sourceRoot": "apps/angular-core-workshop/src",
+      "prefix": "angular-core-workshop",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/angular-core-workshop",
+            "index": "apps/angular-core-workshop/src/index.html",
+            "main": "apps/angular-core-workshop/src/main.ts",
+            "polyfills": "apps/angular-core-workshop/src/polyfills.ts",
+            "tsConfig": "apps/angular-core-workshop/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/angular-core-workshop/src/favicon.ico",
+              "apps/angular-core-workshop/src/assets"
+            ],
+            "styles": ["apps/angular-core-workshop/src/styles.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/angular-core-workshop/src/environments/environment.ts",
+                  "with": "apps/angular-core-workshop/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "angular-core-workshop:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "angular-core-workshop:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "angular-core-workshop:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/angular-core-workshop/tsconfig.app.json",
+              "apps/angular-core-workshop/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/angular-core-workshop/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/angular-core-workshop/jest.config.js",
+            "tsConfig": "apps/angular-core-workshop/tsconfig.spec.json",
+            "setupFile": "apps/angular-core-workshop/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "angular-core-workshop-e2e": {
+      "root": "apps/angular-core-workshop-e2e",
+      "sourceRoot": "apps/angular-core-workshop-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/angular-core-workshop-e2e/cypress.json",
+            "tsConfig": "apps/angular-core-workshop-e2e/tsconfig.e2e.json",
+            "devServerTarget": "angular-core-workshop:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-core-workshop:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/angular-core-workshop-e2e/tsconfig.e2e.json"],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/angular-core-workshop-e2e/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "angular-core-workshop"
+}

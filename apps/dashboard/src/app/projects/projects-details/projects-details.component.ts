@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CloseScrollStrategy } from '@angular/cdk/overlay';
 import { Project } from '@workshop/core-data';
 
 @Component({
